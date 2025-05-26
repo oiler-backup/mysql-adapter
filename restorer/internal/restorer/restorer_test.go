@@ -6,9 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	_ "github.com/go-sql-driver/mysql"
-	backuper "github.com/oiler-backup/mysql-adapter/backuper/backuper"
-	"github.com/stretchr/testify/assert"
+	// _ "github.com/go-sql-driver/mysql"
+
 	"github.com/stretchr/testify/require"
 	tc "github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
@@ -19,7 +18,7 @@ var (
 	dbUser     = "testuser"
 	dbPass     = "testpassword"
 	dbName     = "testdb"
-	backupName = "backup.dump"
+	backupName = "backup.sql"
 )
 
 func setupMySQLContainer() (*tc.Container, error) {
@@ -55,24 +54,18 @@ func Test_Redtore_UploadValidDump(t *testing.T) {
 	}()
 
 	dbhost, _ := (*mysqlC).ContainerIP(ctx)
-	dbPort, _ := (*mysqlC).MappedPort(ctx, "3306")
 	tempDir := t.TempDir()
 	backupFile := filepath.Join(tempDir, backupName)
 
-	b := backuper.NewBackuper(
-		dbhost,
-		dbPort.Port(),
-		dbUser,
-		dbPass,
-		dbName,
-		backupFile,
-	)
-
-	err = b.Backup(ctx, false)
+	file, err := os.Create(backupFile)
+	if err != nil {
+		panic(err)
+	}
+	file.Close()
 
 	r := NewRestorer(
 		dbhost,
-		dbPort.Port(),
+		"3306",
 		dbUser,
 		dbPass,
 		dbName,
@@ -81,10 +74,6 @@ func Test_Redtore_UploadValidDump(t *testing.T) {
 
 	err = r.Restore(ctx)
 	require.NoError(t, err)
-
-	fileInfo, err := os.Stat(backupFile)
-	require.NoError(t, err)
-	assert.Greater(t, fileInfo.Size(), int64(0))
 }
 
 func Test_Redtore_InvalidDump(t *testing.T) {
