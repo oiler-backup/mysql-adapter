@@ -26,7 +26,7 @@ var (
 	logger          *zap.SugaredLogger
 	metricsReporter metricsbase.MetricsReporter
 	ctx             context.Context
-	backupName      string
+	backupInfo      string
 )
 
 // main initializes the logger, configuration, restorer, metrics reporter,
@@ -60,6 +60,8 @@ func main() {
 		mustProccessErrors("Failed to create downloader", err)
 	}
 
+	backupInfo = fmt.Sprintf("%s:%s/%s-revision-%s", cfg.DbHost, cfg.DbPort, cfg.DbName, cfg.BackupRevision)
+
 	// Open a backup file for writing.
 	backupFile, err := os.OpenFile(BACKUP_PATH, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
@@ -79,7 +81,7 @@ func main() {
 	}
 
 	// Report the successful restoration status.
-	err = metricsReporter.ReportStatus(ctx, backupName, true, time.Now().Unix())
+	err = metricsReporter.ReportRestoreStatus(ctx, backupInfo, true, time.Now().Unix())
 	if err != nil {
 		mustProccessErrors("Failed to report successful status", err)
 	}
@@ -91,7 +93,7 @@ func main() {
 // If reporting the failure status also fails, it logs a fatal error and exits the program.
 func mustProccessErrors(msg string, err error, keysAndValues ...any) {
 	logger.Errorw(msg, "error", err, keysAndValues)
-	err = metricsReporter.ReportStatus(ctx, backupName, false, -1)
+	err = metricsReporter.ReportRestoreStatus(ctx, backupInfo, false, -1)
 	if err != nil {
 		logger.Fatalf("Failed to report metric %w\n", err)
 	}

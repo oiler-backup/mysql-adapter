@@ -83,7 +83,7 @@ require (
 	github.com/aws/smithy-go v1.22.2 // indirect
 	github.com/caarlos0/env/v11 v11.3.1
 	github.com/go-sql-driver/mysql v1.9.2
-	github.com/oiler-backup/base v0.0.0-20250525155244-7482c9fc7bb7
+	github.com/oiler-backup/base v0.0.0-20250527171044-5208e846cdb4
 	github.com/oiler-backup/mysql-adapter/backuper v0.0.0-20250526135608-11199109c3d6
 	github.com/testcontainers/testcontainers-go v0.37.0
 	go.uber.org/zap v1.27.0
