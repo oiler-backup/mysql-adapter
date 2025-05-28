@@ -25,7 +25,7 @@ jobs:
         uses: vladopajic/go-test-coverage@v2
         with:
           source-dir: ./restorer
-          profile: coverage.out
+          profile: ./coverage.out
           threshold-file: 70
           threshold-package: 80
           threshold-total: 85
