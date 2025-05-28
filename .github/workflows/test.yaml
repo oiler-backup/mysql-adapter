@@ -20,10 +20,24 @@ jobs:
       - name: Run tests
         run: |
           cd restorer
-          go test -v ./...
+          go test -v -coverprofile=coverage.out ./...
 
-      # - name: Upload test results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: test-results
-      #     path: restorer/test-results.xml
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: restorer/test-results.xml
+
+      - name: Check test coverage
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          profile: coverage.out
+          threshold:
+            file: 70
+            package: 80
+            total: 95
+
+      - name: Calculate test coverage
+        run: |
+          cd restorer
+          go tool cover -html=coverage.out -o=coverage.html
