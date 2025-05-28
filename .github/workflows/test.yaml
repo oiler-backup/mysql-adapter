@@ -32,10 +32,9 @@ jobs:
         uses: vladopajic/go-test-coverage@v2
         with:
           profile: coverage.out
-          threshold:
-            file: 70
-            package: 80
-            total: 95
+          threshold-file: 70
+          threshold-package: 80
+          threshold-total: 95
 
       - name: Calculate test coverage
         run: |
