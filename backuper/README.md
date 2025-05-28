@@ -6,7 +6,7 @@ The `backuper` package is responsible for performing backups of a MySQL database
 
 2. **Database Connection**: The `Backuper` struct in the `backuper` package establishes a connection to the MySQL database using the provided credentials.
 
-3. **Backup Execution**: The `Backup` method of the `Backuper` struct executes the `mysqldump` command to create a backup of the specified database. It handles both secure (TLS/SSL) and insecure connections based on the configuration.
+3. **Backup Execution**: The `Backup` method of the `Backuper` struct executes the `mysqldump` command to create a backup of the specified database. It handles both secure (_TLS/SSL_) and insecure connections based on the configuration.
 
 4. **S3 Upload**: After the backup is created locally, it is uploaded to an S3 bucket using the `s3base` package. The package also ensures that only the specified maximum number of backups are retained in the bucket.
 

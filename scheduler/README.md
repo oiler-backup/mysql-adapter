@@ -49,11 +49,3 @@ The Scheduler is a service responsible for managing database backups and restora
 ## Configuration
 
 Configuration for the Scheduler is loaded from environment variables. Required fields include `SYSTEM_NAMESPACE`. Default values are provided for `BACKUPER_VERSION`, `RESTORER_VERSION`, and `PORT`.
-
-### Example Environment Variables
-
-```bash
-export SYSTEM_NAMESPACE=test-system
-export BACKUPER_VERSION=myorg/my-backuper:latest
-export RESTORER_VERSION=myorg/my-restorer:latest
-export PORT=8080
