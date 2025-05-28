@@ -21,16 +21,18 @@ jobs:
         working-directory: ./restorer
         run: go test -v -coverprofile=./coverage.out ./...
 
-      - name: ls
-        working-directory: ./restorer
-        run: ls -la
-
       - name: Check test coverage
         uses: vladopajic/go-test-coverage@v2
         with:
           source-dir: ./restorer
           config: ./restorer/.testcoverage.yaml
 
-      - name: Calculate test coverage
+      - name: Generate coverage report
         working-directory: ./restorer
-        run: go tool cover -html=coverage.out -o=coverage.html
+        run: go tool cover -html=coverage.out -o coverage.html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: restorer/coverage.html
