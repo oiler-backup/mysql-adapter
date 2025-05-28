@@ -22,16 +22,10 @@ jobs:
           cd restorer
           go test -v -coverprofile=coverage.out ./...
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: restorer/test-results.xml
-
       - name: Check test coverage
         uses: vladopajic/go-test-coverage@v2
         with:
-          profile: coverage.out
+          profile: restorer/coverage.out
           threshold-file: 70
           threshold-package: 80
           threshold-total: 85
