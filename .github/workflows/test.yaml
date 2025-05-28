@@ -19,15 +19,17 @@ jobs:
 
       - name: Run tests
         working-directory: ./restorer
-        run: |
-          go test -v -coverprofile=./coverage.out ./...
-          ls -la
+        run: go test -v -coverprofile=./coverage.out ./...
+
+      - name: ls
+        working-directory: ./restorer
+        run: ls -la
 
       - name: Check test coverage
         uses: vladopajic/go-test-coverage@v2
         with:
           source-dir: ./restorer
-          profile: ./coverage.out
+          profile: restorer/coverage.out
           threshold-file: 70
           threshold-package: 80
           threshold-total: 85
