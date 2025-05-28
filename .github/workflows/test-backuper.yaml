@@ -1,0 +1,38 @@
+name: Run backuper Tests
+
+on:
+  pull_request:
+    paths:
+      - 'backuper/**'
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '~1.24'
+
+      - name: Run tests
+        working-directory: ./backuper
+        run: go test -v -coverprofile=./coverage.out ./...
+
+      - name: Check test coverage
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          source-dir: ./backuper
+          config: ./backuper/.testcoverage.yaml
+
+      - name: Generate coverage report
+        working-directory: ./backuper
+        run: go tool cover -html=coverage.out -o coverage.html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: backuper/coverage.html
