@@ -60,6 +60,7 @@ func main() {
 		mustProccessErrors("Failed to create downloader", err)
 	}
 
+	// Backup info for metrics reporting.
 	backupInfo = fmt.Sprintf("%s:%s/%s-revision-%s", cfg.DbHost, cfg.DbPort, cfg.DbName, cfg.BackupRevision)
 
 	// Open a backup file for writing.
