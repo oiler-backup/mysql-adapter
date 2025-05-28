@@ -38,7 +38,7 @@ threshold:
 exclude:
   # Exclude files or packages matching their paths
   paths:
-    - ^pkg/main    # exclude package `pkg/bar`
+    - main.go    # exclude package `main`
 
 # File name of go-test-coverage breakdown file, which can be used to
 # analyze coverage difference.
