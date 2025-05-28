@@ -29,7 +29,7 @@ jobs:
         uses: vladopajic/go-test-coverage@v2
         with:
           source-dir: ./restorer
-          config: ./restorer/.testcoverage.yml
+          config: ./restorer/.testcoverage.yaml
 
       - name: Calculate test coverage
         working-directory: ./restorer
