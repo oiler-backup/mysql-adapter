@@ -1,0 +1,29 @@
+name: Run Restorer Tests
+
+on:
+  pull_request:
+    paths:
+      - 'restorer/**'
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.19'
+
+      - name: Run tests
+        run: |
+          cd restorer
+          go test -v ./...
+
+      # - name: Upload test results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: test-results
+      #     path: restorer/test-results.xml
