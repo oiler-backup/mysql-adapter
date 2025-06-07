@@ -27,7 +27,7 @@ jobs:
           source-dir: ./restorer
           config: ./restorer/.testcoverage.yaml
 
-      - name: Generate coverage report
+      - name: Generate  visual coverage report
         working-directory: ./restorer
         run: go tool cover -html=coverage.out -o coverage.html
 
